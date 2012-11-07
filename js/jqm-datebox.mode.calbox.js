@@ -13,6 +13,7 @@
 		themeDatePick: 'a',
 		themeDateHigh: 'e',
 		themeDateHighAlt: 'e',
+		themeDateHighArray: false,
 		themeDate: 'd',
 		
 		calHighToday: true,
@@ -34,6 +35,7 @@
 		highDays: false,
 		highDates: false,
 		highDatesAlt: false,
+		highDatesArray: false,
 		enableDates: false
 	});
 	$.extend( $.mobile.datebox.prototype, {
@@ -99,6 +101,12 @@
 					ret.theme = o.themeDatePick;
 				} else if ( o.calHighToday && ret.comp === cal.thisDate.comp() ) {
 					ret.theme = o.themeDateToday;
+				} else if ( $.isArray(o.highDatesArray) && $.isArray(o.themeDateHighArray) && o.highDatesArray.length == o.themeDateHighArray.length ) {
+					for ( var i = 0; i < o.highDatesArray.length; i++ ) {
+						if ( $.isArray(o.highDatesArray[i]) && ($.inArray(ret.iso, o.highDatesArray[i]) > -1)) {
+							ret.theme = o.themeDateHighArray[i];
+						}
+					}
 				} else if ( $.isArray(o.highDatesAlt) && ($.inArray(ret.iso, o.highDatesAlt) > -1) ) {
 					ret.theme = o.themeDateHighAlt;
 				} else if ( $.isArray(o.highDates) && ($.inArray(ret.iso, o.highDates) > -1) ) {
